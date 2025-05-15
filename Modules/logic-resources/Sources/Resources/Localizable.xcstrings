@@ -447,7 +447,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "会員ID"
+            "value" : "document_number"
           }
         }
       }
@@ -634,7 +634,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "メールアドレス"
+            "value" : "given_name"
           }
         }
       }
@@ -942,7 +942,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "会員VC"
+            "value" : "mDL"
           }
         }
       }
