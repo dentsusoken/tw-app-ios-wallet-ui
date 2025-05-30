@@ -83,23 +83,9 @@ final class ProximityRequestViewModel<Router: RouterHost>: BaseRequestViewModel<
   }
 
   override func getSuccessRoute() -> AppRoute? {
-    .biometry(
-      config: UIConfig.Biometry(
-        title: getTitle(),
-        caption: .requestDataShareBiometryCaption,
-        quickPinOnlyCaption: .requestDataShareQuickPinCaption,
-        navigationSuccessType: .push(
-          .proximityLoader(
-            getRelyingParty(),
-            presentationCoordinator: interactor.presentationSessionCoordinator
-          )
-        ),
-        navigationBackType: .popTo(
-          .proximityRequest(presentationCoordinator: interactor.presentationSessionCoordinator)
-        ),
-        isPreAuthorization: false,
-        shouldInitializeBiometricOnCreate: true
-      )
+    AppRoute.proximityLoader(
+      getRelyingParty(),
+      presentationCoordinator: interactor.presentationSessionCoordinator
     )
   }
 
