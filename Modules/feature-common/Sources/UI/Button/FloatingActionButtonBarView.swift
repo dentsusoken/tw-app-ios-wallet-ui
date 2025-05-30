@@ -24,7 +24,7 @@ public struct FloatingActionButtonBarView: View {
   public let backgroundColor: Color
   public let edgeInsets: EdgeInsets
   public let addAction: () -> Void
-//  public let shareAction: () -> Void
+  public let shareAction: () -> Void
   public let vpHistoryAction: () -> Void
 
   public init(
@@ -32,14 +32,14 @@ public struct FloatingActionButtonBarView: View {
     backgroundColor: Color = .clear,
     edgeInsets: EdgeInsets = .init(),
     addAction: @escaping @autoclosure () -> Void,
-    // shareAction: @escaping @autoclosure () -> Void,
+    shareAction: @escaping @autoclosure () -> Void,
     vpHistoryAction: @escaping @autoclosure () -> Void
   ) {
     self.isLoading = isLoading
     self.backgroundColor = backgroundColor
     self.edgeInsets = edgeInsets
     self.addAction = addAction
-//    self.shareAction = shareAction
+    self.shareAction = shareAction
     self.vpHistoryAction = vpHistoryAction
   }
 
@@ -58,15 +58,15 @@ public struct FloatingActionButtonBarView: View {
         action: addAction
       )
 
-//      FloatingActionButtonView(
-//        title: .showQRTap,
-//        textColor: Theme.shared.color.white,
-//        backgroundColor: Theme.shared.color.primary,
-//        icon: Theme.shared.image.share,
-//        iconColor: Theme.shared.color.white,
-//        isLoading: isLoading,
-//        action: shareAction
-//      )
+      FloatingActionButtonView(
+        title: .showQRTap,
+        textColor: Theme.shared.color.white,
+        backgroundColor: Theme.shared.color.primary,
+        icon: Theme.shared.image.share,
+        iconColor: Theme.shared.color.white,
+        isLoading: isLoading,
+        action: shareAction
+      )
 
       FloatingActionButtonView(
         title: .vpHistoryTap,
