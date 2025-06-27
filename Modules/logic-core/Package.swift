@@ -13,8 +13,8 @@ let package = Package(
   ],
   dependencies: [
     .package(
-      url: "https://github.com/ryohei-ebisawa/tw-lib-ios-wallet-kit.git",
-      branch: "main"
+      name: "tw-lib-ios-wallet-kit",
+      path: "../../../tw-lib-ios-wallet-kit"
     ),
     .package(
       name: "logic-resources",
