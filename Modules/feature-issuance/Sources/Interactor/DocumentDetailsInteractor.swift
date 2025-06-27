@@ -45,23 +45,24 @@ final class DocumentDetailsInteractorImpl: DocumentDetailsInteractor {
     let successState: DocumentDetailsDeletionPartialState
 
     do {
-
-      var shouldDeleteAllDocuments: Bool {
-        if type == .MDL {
-
-          let documentPids = walletController.fetchDocuments(
-            with: DocumentTypeIdentifier.MDL
-          )
+        
+//      var shouldDeleteAllDocuments: Bool {
+//        if type == .PID {
+//          
+//          let documentPids = walletController.fetchDocuments(
+//            with: DocumentTypeIdentifier.PID
+//          )
 //          let mainPid = walletController.fetchMainPidDocument()
-
-          guard documentPids.count > 1 else { return true }
-
+//          
+//          guard documentPids.count > 1 else { return true }
+//          
 //          return mainPid?.id == documentId
-          return false
-        } else {
-          return false
-        }
-      }
+//          
+//        } else {
+//          return false
+//        }
+//      }
+      let shouldDeleteAllDocuments: Bool = false
 
       if shouldDeleteAllDocuments {
         try await walletController.clearDocuments()
