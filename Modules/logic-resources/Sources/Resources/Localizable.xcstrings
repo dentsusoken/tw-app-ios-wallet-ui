@@ -848,6 +848,17 @@
         }
       }
     },
+    "issuer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Issuer"
+          }
+        }
+      }
+    },
     "issuing_authority" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1610,6 +1621,17 @@
         }
       }
     },
+    "service" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service"
+          }
+        }
+      }
+    },
     "sex" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1698,6 +1720,17 @@
         }
       }
     },
+    "type" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type"
+          }
+        }
+      }
+    },
     "un_distinguishing_sign" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1731,6 +1764,17 @@
         }
       }
     },
+    "unified_id" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unified ID"
+          }
+        }
+      }
+    },
     "unknown_issuer" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1749,6 +1793,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verifier"
+          }
+        }
+      }
+    },
+    "user_id" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User ID"
           }
         }
       }
