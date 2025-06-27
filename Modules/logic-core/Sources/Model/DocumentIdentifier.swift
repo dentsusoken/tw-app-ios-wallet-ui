@@ -20,6 +20,7 @@ public enum DocumentTypeIdentifier: RawRepresentable, Equatable {
 
 //  case PID
   case MDL
+  case UnifiedID
 //  case AGE
 //  case GENERIC(docType: String)
 
@@ -29,6 +30,8 @@ public enum DocumentTypeIdentifier: RawRepresentable, Equatable {
 //      LocalizableString.shared.get(with: .pid)
     case .MDL:
       LocalizableString.shared.get(with: .mdl)
+    case .UnifiedID:
+      LocalizableString.shared.get(with: .unifiedId)
 //    case .AGE:
 //      LocalizableString.shared.get(with: .ageVerification)
 //    case .GENERIC(let docType):
@@ -42,6 +45,8 @@ public enum DocumentTypeIdentifier: RawRepresentable, Equatable {
 //      Self.pidDocType
     case .MDL:
       Self.mdlDocType
+    case .UnifiedID:
+      Self.unifiedIdDocType
 //    case .AGE:
 //      Self.ageDocType
 //    case .GENERIC(let docType):
@@ -51,7 +56,9 @@ public enum DocumentTypeIdentifier: RawRepresentable, Equatable {
 
   public var isSupported: Bool {
     return switch self {
+//    case .PID, .MDL, .AGE: true
     case .MDL: true
+    case .UnifiedID: true
 //    case .GENERIC: false
     }
   }
@@ -60,7 +67,10 @@ public enum DocumentTypeIdentifier: RawRepresentable, Equatable {
     switch rawValue {
 //    case Self.pidDocType:
 //      self = .PID
-//    case Self.mdlDocType:
+    case Self.mdlDocType:
+      self = .MDL
+    case Self.unifiedIdDocType:
+      self = .UnifiedID
     default:
       self = .MDL
 //    default:
@@ -72,5 +82,6 @@ public enum DocumentTypeIdentifier: RawRepresentable, Equatable {
 private extension DocumentTypeIdentifier {
 //  static let pidDocType = "eu.europa.ec.eudi.pid.1"
   static let mdlDocType = "org.iso.18013.5.1.mDL"
+  static let unifiedIdDocType = "com.dentsusoken.vecrea.UnifiedID"
 //  static let ageDocType = "eu.europa.ec.eudi.pseudonym.age_over_18.1"
 }

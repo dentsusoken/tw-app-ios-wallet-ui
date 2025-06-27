@@ -62,6 +62,13 @@ public extension AddDocumentUIModel {
         isLoading: false,
         type: .MDL
       ),
+      .init(
+        isEnabled: true,
+        documentName: .unifiedId,
+        image: Theme.shared.image.id,
+        isLoading: false,
+        type: .UnifiedID
+      ),
 //      .init(
 //        isEnabled: true,
 //        documentName: .ageVerification,

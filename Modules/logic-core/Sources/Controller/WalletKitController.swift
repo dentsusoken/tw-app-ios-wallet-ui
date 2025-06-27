@@ -232,6 +232,8 @@ extension WalletKitController {
 //      ]
     case .MDL:
       return []
+    case .UnifiedID:
+      return []
     }
   }
 

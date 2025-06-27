@@ -179,6 +179,7 @@ public extension RequestDataSection {
   enum `Type`: Equatable {
 //    case id
     case mdl
+    case unifiedId
 //    case age
     case custom(String)
 
@@ -188,6 +189,8 @@ public extension RequestDataSection {
 //        self = .id
       case .MDL:
         self = .mdl
+      case .UnifiedID:
+        self = .unifiedId
 //      case .AGE:
 //        self = .age
 //      case .GENERIC(docType: let docType):
