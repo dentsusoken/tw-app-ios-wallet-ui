@@ -100,33 +100,6 @@
       }
     },
     {
-      "identity" : "eudi-lib-ios-iso18013-data-model",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/eu-digital-identity-wallet/eudi-lib-ios-iso18013-data-model.git",
-      "state" : {
-        "revision" : "12314daf45d637a1afeda321d605f328d422fe8d",
-        "version" : "0.2.6"
-      }
-    },
-    {
-      "identity" : "eudi-lib-ios-iso18013-data-transfer",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/eu-digital-identity-wallet/eudi-lib-ios-iso18013-data-transfer.git",
-      "state" : {
-        "revision" : "ceeddd2a37f579212752bfb38e54efa87ec567e3",
-        "version" : "0.2.9"
-      }
-    },
-    {
-      "identity" : "eudi-lib-ios-iso18013-security",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/eu-digital-identity-wallet/eudi-lib-ios-iso18013-security.git",
-      "state" : {
-        "revision" : "41a7ba66ff5d614c9ef7d50607ef0a9af7ebb577",
-        "version" : "0.2.1"
-      }
-    },
-    {
       "identity" : "eudi-lib-ios-presentation-exchange-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/eu-digital-identity-wallet/eudi-lib-ios-presentation-exchange-swift.git",
@@ -415,30 +388,57 @@
       }
     },
     {
-      "identity" : "tw-lib-ios-openid4vci-swift",
+      "identity" : "tw-lib-ios-iso18013-data-model",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ryohei-ebisawa/tw-lib-ios-openid4vci-swift",
+      "location" : "https://github.com/dentsusoken/tw-lib-ios-iso18013-data-model.git",
       "state" : {
         "branch" : "main",
-        "revision" : "f7a4c138bf72677606807ca7105358085826d1b4"
+        "revision" : "d064e1cedcd59733c0e4e83922e4418a944b228e"
+      }
+    },
+    {
+      "identity" : "tw-lib-ios-iso18013-data-transfer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dentsusoken/tw-lib-ios-iso18013-data-transfer.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "14ef3e054ed6bc739dd4744ff47dcb4d2d316d6f"
+      }
+    },
+    {
+      "identity" : "tw-lib-ios-iso18013-security",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dentsusoken/tw-lib-ios-iso18013-security.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d9b9f786d91725fe0e64774d47cf94d665e8ce2e"
+      }
+    },
+    {
+      "identity" : "tw-lib-ios-openid4vci-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dentsusoken/tw-lib-ios-openid4vci-swift.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0c08b99fb6b7c5187450a70fa28ae9fde7f3ecce"
       }
     },
     {
       "identity" : "tw-lib-ios-wallet-kit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ryohei-ebisawa/tw-lib-ios-wallet-kit.git",
+      "location" : "https://github.com/dentsusoken/tw-lib-ios-wallet-kit.git",
       "state" : {
         "branch" : "main",
-        "revision" : "926074f33ed6f58d485dadb1ba4433007bc62014"
+        "revision" : "7b66bd533207b635bbd02afc1c3a2d7111dd3b27"
       }
     },
     {
       "identity" : "tw-lib-ios-wallet-storage",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ryohei-ebisawa/tw-lib-ios-wallet-storage",
+      "location" : "https://github.com/dentsusoken/tw-lib-ios-wallet-storage.git",
       "state" : {
         "branch" : "main",
-        "revision" : "ad186527a6126b3ef1f0159da2921f685043e3fa"
+        "revision" : "25fa03f9e47e1bb16ab65328aa12d2d1e882426d"
       }
     },
     {
