@@ -111,6 +111,8 @@ public final class LocalizableString: LocalizableStringType {
       bundle.localizedString(forKey: "pid")
     case .mdl:
       bundle.localizedString(forKey: "mdl")
+    case .unifiedId:
+      bundle.localizedString(forKey: "unified_id")
     case .ageVerification:
       bundle.localizedString(forKey: "age_verification")
     case .addDocumentTitle:
@@ -319,6 +321,7 @@ public extension LocalizableString {
     case loginButton
     case pid
     case mdl
+    case unifiedId
     case ageVerification
     case addDocumentTitle
     case addDocumentSubtitle
