@@ -139,6 +139,19 @@ public struct BaseRequestView<Router: RouterHost>: View {
         }
       }
     }
+    .sheetDialog(isPresented: $viewModel.isRedirectModalShowing) {
+      SheetContentView {
+        VStack(spacing: SPACING_MEDIUM) {
+
+          ContentTitleView(
+            title: .redirectTitle,
+            caption: .redirectCaption
+          )
+          WrapButtonView(style: .primary, title: .okButton, onAction: viewModel.onShowRedirectModal())
+          WrapButtonView(style: .secondary, title: .cancelButton, onAction: viewModel.onShowRedirectModal())
+        }
+      }
+    }
     .sheetDialog(isPresented: $viewModel.isVerifiedEntityModalShowing) {
       SheetContentView {
         VStack(spacing: SPACING_MEDIUM) {

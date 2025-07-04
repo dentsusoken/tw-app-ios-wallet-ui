@@ -35,6 +35,7 @@ open class BaseRequestViewModel<Router: RouterHost>: BaseViewModel<Router, Reque
   @Published var isCancelModalShowing: Bool = false
   @Published var isRequestInfoModalShowing: Bool = false
   @Published var isVerifiedEntityModalShowing: Bool = false
+  @Published var isRedirectModalShowing: Bool = false
 
   public init(router: Router) {
     super.init(
@@ -114,7 +115,9 @@ open class BaseRequestViewModel<Router: RouterHost>: BaseViewModel<Router, Reque
   }
 
   public func onEmptyDocuments() {
+    print("debug: feature-common BaseRequestViewModel.swift: on empty documents")
     setNewState(items: [])
+    isRedirectModalShowing = !isRedirectModalShowing
   }
 
   public func onReceivedItems(
@@ -123,6 +126,7 @@ open class BaseRequestViewModel<Router: RouterHost>: BaseViewModel<Router, Reque
     relyingParty: String,
     isTrusted: Bool
   ) {
+    print("debug: feature-common BaseRequestViewModel.swift: on received items")
     setNewState(
       items: items,
       title: title,
@@ -152,6 +156,7 @@ open class BaseRequestViewModel<Router: RouterHost>: BaseViewModel<Router, Reque
   func onPop() {
     isRequestInfoModalShowing = false
     isCancelModalShowing = false
+    isRedirectModalShowing = false
     if let route = getPopRoute() {
       router.popTo(with: route)
     } else {
@@ -165,6 +170,10 @@ open class BaseRequestViewModel<Router: RouterHost>: BaseViewModel<Router, Reque
 
   func onShowRequestInfoModal() {
     isRequestInfoModalShowing = !isRequestInfoModalShowing
+  }
+
+  func onShowRedirectModal() {
+    isRedirectModalShowing = !isRedirectModalShowing
   }
 
   func onVerifiedEntityModal() {

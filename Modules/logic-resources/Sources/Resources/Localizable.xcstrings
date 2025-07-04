@@ -1291,6 +1291,28 @@
         }
       }
     },
+    "redirect_caption" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Verifiable Credential (VC) was found in your wallet.\nYou can visit the Issuer to request and receive your VC."
+          }
+        }
+      }
+    },
+    "redirect_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VC Not Found"
+          }
+        }
+      }
+    },
     "registration_id" : {
       "extractionState" : "manual",
       "localizations" : {

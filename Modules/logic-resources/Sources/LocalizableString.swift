@@ -67,6 +67,10 @@ public final class LocalizableString: LocalizableStringType {
       bundle.localizedString(forKey: "request_data_info_notice")
     case .requestDataTitle(let args):
       bundle.localizedStringWithArguments(forKey: "request_data_share_title", arguments: args)
+    case .redirectTitle:
+      bundle.localizedString(forKey: "redirect_title")
+    case .redirectCaption:
+      bundle.localizedString(forKey: "redirect_caption")
     case .cancelShareSheetTitle:
       bundle.localizedString(forKey: "cancel_share_sheet_title")
     case .cancelShareSheetCaption:
@@ -299,6 +303,8 @@ public extension LocalizableString {
     case requestDataCaption
     case requestDataInfoNotice
     case requestDataTitle([String])
+    case redirectTitle
+    case redirectCaption
     case cancelShareSheetTitle
     case cancelShareSheetCaption
     case cancelShareSheetContinue
