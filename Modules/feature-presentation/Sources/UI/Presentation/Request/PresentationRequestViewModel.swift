@@ -42,6 +42,26 @@ final class PresentationRequestViewModel<Router: RouterHost>: BaseRequestViewMod
       )
     case .failure:
       self.onEmptyDocuments()
+      // ToDo: call issueDocument(docType: String) here temporarily
+      switch await interactor.issueDocument(docType: DocumentTypeIdentifier.MDL.rawValue) {
+      case .success(let docId):
+//        router.push(
+//          with: .issuanceSuccess(
+//            config: viewState.config,
+//            documentIdentifier: docId
+//          )
+//        )
+        print("success")
+      case .failure(let error):
+//        setNewState(
+//          addDocumentCellModels: transformCellLoadingState(with: false),
+//          error: .init(
+//            description: .custom(error.localizedDescription),
+//            cancelAction: self.setNewState(error: nil)
+//          )
+//        )
+        print("failure")
+      }
     }
   }
 

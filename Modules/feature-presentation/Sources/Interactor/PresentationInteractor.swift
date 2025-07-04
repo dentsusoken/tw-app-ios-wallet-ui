@@ -33,6 +33,8 @@ public protocol PresentationInteractor {
   func onResponsePrepare(requestItems: [RequestDataUIModel]) async -> Result<RequestItemConvertible, Error>
   func onSendResponse() async -> Result<URL?, Error>
   func updatePresentationCoordinator(with coordinator: PresentationSessionCoordinator)
+  
+  func issueDocument(docType: String) async -> IssueDocumentPartialState
 }
 
 final class PresentationInteractorImpl: PresentationInteractor {
@@ -79,6 +81,8 @@ final class PresentationInteractorImpl: PresentationInteractor {
       )
     } catch {
       print("debug: feature-presentation PresentationInteractor.swift: return failure")
+      print("debug: feature-presentation PresentationInteractor.swift: .MDL:", self.walletKitController.fetchDocuments(with: .MDL))
+      print("debug: feature-presentation PresentationInteractor.swift: .UnifiedId:", self.walletKitController.fetchDocuments(with: .UnifiedID))
       return .failure(error)
     }
   }
@@ -131,4 +135,18 @@ final class PresentationInteractorImpl: PresentationInteractor {
       }
     }
   }
+  
+  public func issueDocument(docType: String) async -> IssueDocumentPartialState {
+    do {
+      let doc = try await walletKitController.issueDocument(docType: docType, format: .cbor)
+      return .success(doc.id)
+    } catch {
+      return .failure(WalletCoreError.unableToIssueAndStore)
+    }
+  }
+}
+
+public enum IssueDocumentPartialState {
+  case success(String)
+  case failure(Error)
 }
