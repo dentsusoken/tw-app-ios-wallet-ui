@@ -53,6 +53,10 @@ final class DeepLinkControllerImpl: DeepLinkController {
   }
 
   public func hasDeepLink(url: URL) -> DeepLink.Executable? {
+    print("debug: logic-ui DeepLinkController.swift: url: \(url)")
+    print("debug: logic-ui DeepLinkController.swift: components: \(String(describing: URLComponents(url: url, resolvingAgainstBaseURL: true)))")
+    print("debug: logic-ui DeepLinkController.swift: schema: \(String(describing: URLComponents(url: url, resolvingAgainstBaseURL: true)?.scheme))")
+    print("debug: logic-ui DeepLinkController.swift: action: \(String(describing: DeepLink.Action.parseType(with: URLComponents(url: url, resolvingAgainstBaseURL: true)?.scheme ?? "", and: urlSchemaController)))")
     if let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
        let scheme = components.scheme,
        let action = DeepLink.Action.parseType(with: scheme, and: urlSchemaController) {
@@ -162,6 +166,7 @@ public extension DeepLink {
       with scheme: String,
       and urlSchemaController: UrlSchemaController
     ) -> Action? {
+      print("debug: logic-ui DeepLinkController.swift: schema: \(scheme)")
       switch scheme {
       case _ where openid4vp.getSchemas(with: urlSchemaController).contains(scheme):
         return .openid4vp

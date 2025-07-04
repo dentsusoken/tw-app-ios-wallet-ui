@@ -59,7 +59,13 @@ final class PresentationInteractorImpl: PresentationInteractor {
 
   public func onRequestReceived() async -> Result<OnlineAuthenticationRequestSuccessModel, Error> {
     do {
+      print("debug: feature-presentation PresentationInteractor.swift: presentation coordinator request received")
       let response = try await presentationCoordinator.requestReceived()
+      print("debug: feature-presentation PresentationInteractor.swift: ToDo: Latest Eudiw contains follows")
+      // ToDo: Latest Eudiw contains follows
+      // let revokedDocuments = (try? await walletKitController.fetchRevokedDocuments()) ?? []
+      // let documents = response.items.filter { item in !revokedDocuments.contains(where: { $0 == item.docId }) }
+      // guard !documents.isEmpty else { return .failure(WalletCoreError.unableFetchDocuments) }
       return .success(
         .init(
           requestDataCells: RequestDataUiModel.items(
@@ -72,11 +78,13 @@ final class PresentationInteractorImpl: PresentationInteractor {
         )
       )
     } catch {
+      print("debug: feature-presentation PresentationInteractor.swift: return failure")
       return .failure(error)
     }
   }
 
   public func onResponsePrepare(requestItems: [RequestDataUIModel]) async -> Result<RequestItemConvertible, Error> {
+    print("debug: feature-presentation PresentationInteractor.swift: presentation coordinator response prepare")
     let requestConvertible = requestItems
       .reduce(into: [RequestDataRow]()) { partialResult, cell in
         if let item = cell.isDataRow, item.isSelected {
@@ -103,7 +111,7 @@ final class PresentationInteractorImpl: PresentationInteractor {
   }
 
   public func onSendResponse() async -> Result<URL?, Error> {
-
+    print("debug: feature-presentation PresentationInteractor.swift: presentation coordinator send response")
     guard case PresentationState.responseToSend(let responseItem) = await presentationCoordinator.getState() else {
       return .failure(PresentationSessionError.invalidState)
     }

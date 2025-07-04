@@ -28,6 +28,9 @@ final class UrlSchemaControllerImpl: UrlSchemaController {
     else {
       return []
     }
+    print("debug: logic-ui UrlSchemaController.swift: type: \(type)")
+    print("debug: logic-ui UrlSchemaController.swift: types: \(types)")
+    print("debug: logic-ui UrlSchemaController.swift: urlSchemas: \(urlSchemas)")
     return urlSchemas.filter { $0.contains(type) }
   }
 }

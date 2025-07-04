@@ -30,6 +30,7 @@ final class PresentationRequestViewModel<Router: RouterHost>: BaseRequestViewMod
   }
 
   override func doWork() async {
+    print("debug: feature-presentation PresentationRequestViewModel.swift: doWork")
     self.onStartLoading()
     switch await interactor.onDeviceEngagement() {
     case .success(let authenticationRequest):

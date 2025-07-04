@@ -140,6 +140,7 @@ final class WalletKitControllerImpl: WalletKitController {
   }
 
   private func startRemotePresentation(urlString: String) -> PresentationSessionCoordinator {
+    print("debug: logic-core WalletKitController: startRemotePresentation")
     self.stopPresentation()
 
     let data = urlString.data(using: .utf8) ?? Data()
