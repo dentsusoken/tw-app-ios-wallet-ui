@@ -56,18 +56,21 @@ final class PresentationInteractorImpl: PresentationInteractor {
 
   public func onDeviceEngagement() async -> Result<OnlineAuthenticationRequestSuccessModel, Error> {
     await presentationCoordinator.initialize()
+		// ToDo: Note: This is called from PresentationRequestViewModel doWork function. Implement redirect function here.
+    let url = walletKitController.getStoredPresentationUrlLink()
+    await walletKitController.resolveRequestDocType(urlString: url)  // ToDo: Obtain target doctype string and redirect to issuer
     return await onRequestReceived()
   }
 
   public func onRequestReceived() async -> Result<OnlineAuthenticationRequestSuccessModel, Error> {
     do {
-      print("debug: feature-presentation PresentationInteractor.swift: presentation coordinator request received")
+      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived")
       let response = try await presentationCoordinator.requestReceived()
-      print("debug: feature-presentation PresentationInteractor.swift: ToDo: Latest Eudiw contains follows")
       // ToDo: Latest Eudiw contains follows
       // let revokedDocuments = (try? await walletKitController.fetchRevokedDocuments()) ?? []
       // let documents = response.items.filter { item in !revokedDocuments.contains(where: { $0 == item.docId }) }
-      // guard !documents.isEmpty else { return .failure(WalletCoreError.unableFetchDocuments) }
+      // guard !documents.isEmpty else { return .failure(WalletCoreError.unableFetchDocuments) } 
+      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived return sccess")
       return .success(
         .init(
           requestDataCells: RequestDataUiModel.items(
@@ -80,9 +83,9 @@ final class PresentationInteractorImpl: PresentationInteractor {
         )
       )
     } catch {
-      print("debug: feature-presentation PresentationInteractor.swift: return failure")
-      print("debug: feature-presentation PresentationInteractor.swift: .MDL:", self.walletKitController.fetchDocuments(with: .MDL))
-      print("debug: feature-presentation PresentationInteractor.swift: .UnifiedId:", self.walletKitController.fetchDocuments(with: .UnifiedID))
+      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived return faulure")
+//      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived .MDL:", self.walletKitController.fetchDocuments(with: .MDL))
+//      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived .UnifiedId:", self.walletKitController.fetchDocuments(with: .UnifiedID))
       return .failure(error)
     }
   }

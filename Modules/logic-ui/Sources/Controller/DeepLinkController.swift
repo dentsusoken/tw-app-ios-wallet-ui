@@ -87,6 +87,8 @@ final class DeepLinkControllerImpl: DeepLinkController {
 
     switch deepLinkExecutable.action {
     case .openid4vp:
+      // ToDo: Store deepLink here
+      walletKitController.storePresentationUrlLink(deepLink: deepLinkExecutable.link)
       let session = walletKitController.startSameDevicePresentation(deepLink: deepLinkExecutable.link)
       if !routerHost.isScreenForeground(with: .presentationRequest(presentationCoordinator: session)) {
         routerHost.push(with: .presentationRequest(presentationCoordinator: session))

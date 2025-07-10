@@ -28,6 +28,9 @@ public protocol WalletKitController {
   func startSameDevicePresentation(deepLink: URLComponents) -> PresentationSessionCoordinator
   func startCrossDevicePresentation(urlString: String) -> PresentationSessionCoordinator
   func stopPresentation()
+  func storePresentationUrlLink(deepLink: URLComponents)
+  func getStoredPresentationUrlLink() -> String
+  func resolveRequestDocType(urlString: String) async
   func fetchDocuments() -> [MdocDecodable]
   func fetchDocuments(with type: DocumentTypeIdentifier) -> [MdocDecodable]
   func fetchDocuments(excluded: [DocumentTypeIdentifier]) -> [MdocDecodable]
@@ -63,6 +66,11 @@ final class WalletKitControllerImpl: WalletKitController {
 
   private let configLogic: WalletKitConfig
   private var cancellables = Set<AnyCancellable>()
+  private var storedUrlString: String = "" {
+    didSet {
+      print("urlString changed to: \(storedUrlString)")
+    }
+  }
 
   init(configLogic: WalletKitConfig) {
     self.configLogic = configLogic
@@ -112,6 +120,23 @@ final class WalletKitControllerImpl: WalletKitController {
     return documents
   }
 
+  public func storePresentationUrlLink(deepLink: URLComponents) {
+    self.storedUrlString = decodeDeeplink(link: deepLink) ?? ""
+    print("self.storedUrlString:", self.storedUrlString)
+    print("self Instance ID:", ObjectIdentifier(self))
+  }
+
+  public func getStoredPresentationUrlLink() -> String {
+    print("self.storedUrlString:", self.storedUrlString)
+    print("self Instance ID:", ObjectIdentifier(self))
+    return self.storedUrlString
+  }
+
+  public func resolveRequestDocType(urlString: String) async {
+    let data = urlString.data(using: .utf8) ?? Data()
+    await wallet.resolveRequestDocType(flow: .openid4vp(qrCode: data))
+  }
+
   public func startProximityPresentation() -> PresentationSessionCoordinator {
     self.stopPresentation()
     let session = wallet.beginPresentation(flow: .ble)
@@ -141,11 +166,12 @@ final class WalletKitControllerImpl: WalletKitController {
 
   private func startRemotePresentation(urlString: String) -> PresentationSessionCoordinator {
     print("debug: logic-core WalletKitController: startRemotePresentation")
+    print("debug: logic-core WalletKitController: decodeDeeplink: \(urlString)")
     self.stopPresentation()
 
     let data = urlString.data(using: .utf8) ?? Data()
 
-    let session = wallet.beginPresentation(flow: .openid4vp(qrCode: data))
+    let session = wallet.beginPresentation(flow: .openid4vp(qrCode: data))		// ToDo: Note: Do not create session when wallet is empty
     let presentationSessionCoordinator = DIGraph.resolver.force(
       PresentationSessionCoordinator.self,
       name: RegistrationName.remote.rawValue,
