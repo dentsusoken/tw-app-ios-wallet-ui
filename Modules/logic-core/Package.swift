@@ -12,7 +12,11 @@ let package = Package(
       targets: ["logic-core"])
   ],
   dependencies: [
-    .package(url: "https://github.com/dentsusoken/tw-lib-ios-wallet-kit.git", branch: "main"),
+//    .package(url: "https://github.com/dentsusoken/tw-lib-ios-wallet-kit.git", branch: "main"),
+    .package(
+      name: "tw-lib-ios-wallet-kit",
+      path: "./../../../tw-lib-ios-wallet-kit"
+    ),
     .package(
       name: "logic-resources",
       path: "./logic-resources"
