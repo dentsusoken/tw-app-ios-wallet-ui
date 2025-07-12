@@ -19,6 +19,13 @@ import Combine
 import logic_resources
 import logic_business
 
+private enum KeyIdentifier: String, KeychainWrapper {
+  public var value: String {
+    self.rawValue
+  }
+  case presentationDeepLink
+}
+
 public protocol WalletKitController {
 
   var wallet: EudiWallet { get }
@@ -28,9 +35,9 @@ public protocol WalletKitController {
   func startSameDevicePresentation(deepLink: URLComponents) -> PresentationSessionCoordinator
   func startCrossDevicePresentation(urlString: String) -> PresentationSessionCoordinator
   func stopPresentation()
-  func storePresentationUrlLink(deepLink: URLComponents)
-  func getStoredPresentationUrlLink() -> String
-  func resolveRequestDocType(urlString: String) async
+  func storePresentationDeepLink(deepLink: URLComponents)
+  func getStoredPresentationDeepLink() -> URLComponents?
+  func resolveRequestDocType(deepLink: URLComponents) async
   func fetchDocuments() -> [MdocDecodable]
   func fetchDocuments(with type: DocumentTypeIdentifier) -> [MdocDecodable]
   func fetchDocuments(excluded: [DocumentTypeIdentifier]) -> [MdocDecodable]
@@ -65,15 +72,15 @@ final class WalletKitControllerImpl: WalletKitController {
   public private(set) var activeCoordinator: PresentationSessionCoordinator?
 
   private let configLogic: WalletKitConfig
+  private let keyChainController: KeyChainController
   private var cancellables = Set<AnyCancellable>()
-  private var storedUrlString: String = "" {
-    didSet {
-      print("urlString changed to: \(storedUrlString)")
-    }
-  }
 
-  init(configLogic: WalletKitConfig) {
+  init(
+    configLogic: WalletKitConfig,
+    keyChainController: KeyChainController
+  ) {
     self.configLogic = configLogic
+    self.keyChainController = keyChainController
     wallet.userAuthenticationRequired = configLogic.userAuthenticationRequired
     wallet.verifierApiUri = configLogic.verifierConfig.apiUri
     wallet.verifierLegalName = configLogic.verifierConfig.legalName
@@ -120,19 +127,31 @@ final class WalletKitControllerImpl: WalletKitController {
     return documents
   }
 
-  public func storePresentationUrlLink(deepLink: URLComponents) {
-    self.storedUrlString = decodeDeeplink(link: deepLink) ?? ""
-    print("self.storedUrlString:", self.storedUrlString)
-    print("self Instance ID:", ObjectIdentifier(self))
+  public func storePresentationDeepLink(deepLink: URLComponents) {
+    print("WalletKitController: storePresentationDeepLink: self.Instance ID:", ObjectIdentifier(self))
+    keyChainController.storeValue(
+      key: KeyIdentifier.presentationDeepLink,
+      value: deepLink.url?.absoluteString ?? ""
+    )
+    print("WalletKitController: storePresentationDeepLink: deepLink.url?.absoluteString:", deepLink.url?.absoluteString ?? "")
   }
 
-  public func getStoredPresentationUrlLink() -> String {
-    print("self.storedUrlString:", self.storedUrlString)
-    print("self Instance ID:", ObjectIdentifier(self))
-    return self.storedUrlString
+  public func getStoredPresentationDeepLink() -> URLComponents? {
+    print("WalletKitController: getStoredPresentationDeepLink: self.Instance ID:", ObjectIdentifier(self))
+    guard
+      let urlString = keyChainController.getValue(key: KeyIdentifier.presentationDeepLink),
+      let deepLink = URLComponents(string: urlString)
+    else {
+      return nil
+    }
+    print("WalletKitController: storePresentationDeepLink: deepLink.url?.absoluteString:", deepLink.url?.absoluteString ?? "")
+    keyChainController.removeObject(key: KeyIdentifier.presentationDeepLink)
+    return deepLink
   }
 
-  public func resolveRequestDocType(urlString: String) async {
+  public func resolveRequestDocType(deepLink: URLComponents) async {
+    print("WalletKitController: resolveRequestDocType: deepLink.url?.absoluteString:", deepLink.url?.absoluteString ?? "")
+    let urlString = decodeDeeplink(link: deepLink) ?? ""
     let data = urlString.data(using: .utf8) ?? Data()
     await wallet.resolveRequestDocType(flow: .openid4vp(qrCode: data))
   }
