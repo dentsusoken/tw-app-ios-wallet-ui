@@ -53,10 +53,8 @@ final class DeepLinkControllerImpl: DeepLinkController {
   }
 
   public func hasDeepLink(url: URL) -> DeepLink.Executable? {
-    print("debug: logic-ui DeepLinkController.swift: url: \(url)")
-    print("debug: logic-ui DeepLinkController.swift: components: \(String(describing: URLComponents(url: url, resolvingAgainstBaseURL: true)))")
-    print("debug: logic-ui DeepLinkController.swift: schema: \(String(describing: URLComponents(url: url, resolvingAgainstBaseURL: true)?.scheme))")
-    print("debug: logic-ui DeepLinkController.swift: action: \(String(describing: DeepLink.Action.parseType(with: URLComponents(url: url, resolvingAgainstBaseURL: true)?.scheme ?? "", and: urlSchemaController)))")
+    print("debug: logic-ui DeepLinkController: hasDeepLink")
+		print(url)
     if let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
        let scheme = components.scheme,
        let action = DeepLink.Action.parseType(with: scheme, and: urlSchemaController) {
@@ -87,10 +85,9 @@ final class DeepLinkControllerImpl: DeepLinkController {
 
     switch deepLinkExecutable.action {
     case .openid4vp:
-      // ToDo: Store deepLink here
+      print("debug: logic-ui DeepLinkController: handleDeepLinkAction: .openid4vp")
       walletKitController.storePresentationDeepLink(deepLink: deepLinkExecutable.link)
-      // await walletKitController.resolveRequestDocType(deepLink: deepLinkExecutable.link) // Note: VPの解析は async / await 処理のためここでは実行不可
-      
+      //await walletKitController.resolveRequestDocType(deepLink: deepLinkExecutable.link) // Note: Can not execute async/await function here
       let session = walletKitController.startSameDevicePresentation(deepLink: deepLinkExecutable.link)
       if !routerHost.isScreenForeground(with: .presentationRequest(presentationCoordinator: session)) {
         routerHost.push(with: .presentationRequest(presentationCoordinator: session))
@@ -170,7 +167,6 @@ public extension DeepLink {
       with scheme: String,
       and urlSchemaController: UrlSchemaController
     ) -> Action? {
-      print("debug: logic-ui DeepLinkController.swift: schema: \(scheme)")
       switch scheme {
       case _ where openid4vp.getSchemas(with: urlSchemaController).contains(scheme):
         return .openid4vp

@@ -55,6 +55,7 @@ final class PresentationInteractorImpl: PresentationInteractor {
   }
 
   public func onDeviceEngagement() async -> Result<OnlineAuthenticationRequestSuccessModel, Error> {
+    print("debug: feature-presentation PresentationInteractor: onDeviceEngagement")
     await presentationCoordinator.initialize()
 		// ToDo: This is called from PresentationRequestViewModel doWork function. Implement redirect function here.
     let url = walletKitController.getStoredPresentationDeepLink() ?? URLComponents()
@@ -65,13 +66,13 @@ final class PresentationInteractorImpl: PresentationInteractor {
 
   public func onRequestReceived() async -> Result<OnlineAuthenticationRequestSuccessModel, Error> {
     do {
-      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived")
+      print("debug: feature-presentation PresentationInteractor: onRequestReceived")
       let response = try await presentationCoordinator.requestReceived()
       // ToDo: Latest Eudiw contains follows
       // let revokedDocuments = (try? await walletKitController.fetchRevokedDocuments()) ?? []
       // let documents = response.items.filter { item in !revokedDocuments.contains(where: { $0 == item.docId }) }
       // guard !documents.isEmpty else { return .failure(WalletCoreError.unableFetchDocuments) } 
-      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived return sccess")
+      print("debug: feature-presentation PresentationInteractor: onRequestReceived: return sccess")
       return .success(
         .init(
           requestDataCells: RequestDataUiModel.items(
@@ -84,15 +85,13 @@ final class PresentationInteractorImpl: PresentationInteractor {
         )
       )
     } catch {
-      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived return faulure")
-//      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived .MDL:", self.walletKitController.fetchDocuments(with: .MDL))
-//      print("debug: feature-presentation PresentationInteractor.swift: onRequestReceived .UnifiedId:", self.walletKitController.fetchDocuments(with: .UnifiedID))
+      print("debug: feature-presentation PresentationInteractor: onRequestReceived: return faulure")
       return .failure(error)
     }
   }
 
   public func onResponsePrepare(requestItems: [RequestDataUIModel]) async -> Result<RequestItemConvertible, Error> {
-    print("debug: feature-presentation PresentationInteractor.swift: presentation coordinator response prepare")
+    print("debug: feature-presentation PresentationInteractor: onResponsePrepare")
     let requestConvertible = requestItems
       .reduce(into: [RequestDataRow]()) { partialResult, cell in
         if let item = cell.isDataRow, item.isSelected {
@@ -119,7 +118,7 @@ final class PresentationInteractorImpl: PresentationInteractor {
   }
 
   public func onSendResponse() async -> Result<URL?, Error> {
-    print("debug: feature-presentation PresentationInteractor.swift: presentation coordinator send response")
+    print("debug: feature-presentation PresentationInteractor: onSendResponse")
     guard case PresentationState.responseToSend(let responseItem) = await presentationCoordinator.getState() else {
       return .failure(PresentationSessionError.invalidState)
     }

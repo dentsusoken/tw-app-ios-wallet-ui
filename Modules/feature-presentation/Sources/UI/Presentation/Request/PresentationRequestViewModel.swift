@@ -30,7 +30,7 @@ final class PresentationRequestViewModel<Router: RouterHost>: BaseRequestViewMod
   }
 
   override func doWork() async {
-    print("debug: feature-presentation PresentationRequestViewModel.swift: doWork")
+    print("debug: feature-presentation PresentationRequestViewModel: doWork")
     self.onStartLoading()
     switch await interactor.onDeviceEngagement() {
     case .success(let authenticationRequest):
@@ -42,26 +42,6 @@ final class PresentationRequestViewModel<Router: RouterHost>: BaseRequestViewMod
       )
     case .failure:
       self.onEmptyDocuments()
-      // ToDo: call issueDocument(docType: String) here temporarily
-      switch await interactor.issueDocument(docType: DocumentTypeIdentifier.MDL.rawValue) {
-      case .success(let docId):
-//        router.push(
-//          with: .issuanceSuccess(
-//            config: viewState.config,
-//            documentIdentifier: docId
-//          )
-//        )
-        print("success")
-      case .failure(let error):
-//        setNewState(
-//          addDocumentCellModels: transformCellLoadingState(with: false),
-//          error: .init(
-//            description: .custom(error.localizedDescription),
-//            cancelAction: self.setNewState(error: nil)
-//          )
-//        )
-        print("failure")
-      }
     }
   }
 
@@ -123,6 +103,34 @@ final class PresentationRequestViewModel<Router: RouterHost>: BaseRequestViewMod
 
   override func getTrustedRelyingPartyInfo() -> LocalizableString.Key {
     .requestDataVerifiedEntityMessage
+  }
+  
+  override func onRedirect() async {
+    print("debug: feature-presentation PresentationRequestViewModel: orverride onRedirect")
+    // ToDo: call issueDocument(docType: String) here temporarily
+    switch await interactor.issueDocument(docType: DocumentTypeIdentifier.MDL.rawValue) {
+    case .success(let docId):
+      print("debug: feature-presentation PresentationRequestViewModel: orverride onRedirect: interactor.issueDocument: success")
+      print(docId)
+      //        router.push(
+      //          with: .issuanceSuccess(
+      //            config: viewState.config,
+      //            documentIdentifier: docId
+      //          )
+      //        )
+      print("success")
+    case .failure(let error):
+      print("debug: feature-presentation PresentationRequestViewModel: orverride onRedirect: interactor.issueDocument: failure")
+      print(error)
+      //        setNewState(
+      //          addDocumentCellModels: transformCellLoadingState(with: false),
+      //          error: .init(
+      //            description: .custom(error.localizedDescription),
+      //            cancelAction: self.setNewState(error: nil)
+      //          )
+      //        )
+      print("failure")
+    }
   }
 
   func handleDeepLinkNotification(with info: [AnyHashable: Any]) {

@@ -128,29 +128,32 @@ final class WalletKitControllerImpl: WalletKitController {
   }
 
   public func storePresentationDeepLink(deepLink: URLComponents) {
-    print("WalletKitController: storePresentationDeepLink: self.Instance ID:", ObjectIdentifier(self))
+    print("debug: logic-core WalletKitController: storePresentationDeepLink")
+    print("debug: logic-core WalletKitController: Instance ID:", ObjectIdentifier(self))
+    print(deepLink.url?.absoluteString ?? "")
     keyChainController.storeValue(
       key: KeyIdentifier.presentationDeepLink,
       value: deepLink.url?.absoluteString ?? ""
     )
-    print("WalletKitController: storePresentationDeepLink: deepLink.url?.absoluteString:", deepLink.url?.absoluteString ?? "")
   }
 
   public func getStoredPresentationDeepLink() -> URLComponents? {
-    print("WalletKitController: getStoredPresentationDeepLink: self.Instance ID:", ObjectIdentifier(self))
+    print("debug: logic-core WalletKitController: getStoredPresentationDeepLink")
+    print("debug: logic-core WalletKitController: Instance ID:", ObjectIdentifier(self))
     guard
       let urlString = keyChainController.getValue(key: KeyIdentifier.presentationDeepLink),
       let deepLink = URLComponents(string: urlString)
     else {
       return nil
     }
-    print("WalletKitController: storePresentationDeepLink: deepLink.url?.absoluteString:", deepLink.url?.absoluteString ?? "")
+    print(deepLink.url?.absoluteString ?? "")
     keyChainController.removeObject(key: KeyIdentifier.presentationDeepLink)
     return deepLink
   }
 
 	public func resolveRequestDocType(deepLink: URLComponents) async -> String? {
-    print("WalletKitController: resolveRequestDocType: deepLink.url?.absoluteString:", deepLink.url?.absoluteString ?? "")
+    print("debug: logic-core WalletKitController: resolveRequestDocType")
+    print(deepLink.url?.absoluteString ?? "")
     let urlString = decodeDeeplink(link: deepLink) ?? ""
     let data = urlString.data(using: .utf8) ?? Data()
     return await wallet.resolveRequestDocType(flow: .openid4vp(qrCode: data))
@@ -185,7 +188,6 @@ final class WalletKitControllerImpl: WalletKitController {
 
   private func startRemotePresentation(urlString: String) -> PresentationSessionCoordinator {
     print("debug: logic-core WalletKitController: startRemotePresentation")
-    print("debug: logic-core WalletKitController: decodeDeeplink: \(urlString)")
     self.stopPresentation()
 
     let data = urlString.data(using: .utf8) ?? Data()

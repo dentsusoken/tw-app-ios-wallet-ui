@@ -147,8 +147,8 @@ public struct BaseRequestView<Router: RouterHost>: View {
             title: .redirectTitle,
             caption: .redirectCaption
           )
-          WrapButtonView(style: .primary, title: .okButton, onAction: viewModel.onShowRedirectModal())
-          WrapButtonView(style: .secondary, title: .cancelButton, onAction: viewModel.onShowRedirectModal())
+          WrapButtonView(style: .primary, title: .okButton, onAction: {Task {await viewModel.onConfirmRedirect()}}())
+          WrapButtonView(style: .secondary, title: .cancelButton, onAction: viewModel.onCancelRedirect())
         }
       }
     }

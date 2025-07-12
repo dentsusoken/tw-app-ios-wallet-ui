@@ -93,6 +93,10 @@ open class BaseRequestViewModel<Router: RouterHost>: BaseViewModel<Router, Reque
     guard let route = getSuccessRoute() else { return }
     router.push(with: route)
   }
+  
+  open func onRedirect() async {
+    print("debug: feature-common BaseRequestViewModel: onRedirect")
+  }
 
   open func getPopRoute() -> AppRoute? {
     return nil
@@ -115,7 +119,7 @@ open class BaseRequestViewModel<Router: RouterHost>: BaseViewModel<Router, Reque
   }
 
   public func onEmptyDocuments() {
-    print("debug: feature-common BaseRequestViewModel.swift: on empty documents")
+    print("debug: feature-common BaseRequestViewModel: onEmptyDocuments")
     setNewState(items: [])
     isRedirectModalShowing = !isRedirectModalShowing
   }
@@ -126,7 +130,7 @@ open class BaseRequestViewModel<Router: RouterHost>: BaseViewModel<Router, Reque
     relyingParty: String,
     isTrusted: Bool
   ) {
-    print("debug: feature-common BaseRequestViewModel.swift: on received items")
+    print("debug: feature-common BaseRequestViewModel: onReceivedItems")
     setNewState(
       items: items,
       title: title,
@@ -172,7 +176,14 @@ open class BaseRequestViewModel<Router: RouterHost>: BaseViewModel<Router, Reque
     isRequestInfoModalShowing = !isRequestInfoModalShowing
   }
 
-  func onShowRedirectModal() {
+  func onConfirmRedirect() async {
+    print("debug: feature-common BaseRequestViewModel: onConfirmRedirect")
+    await onRedirect()
+    isRedirectModalShowing = !isRedirectModalShowing
+  }
+  
+  func onCancelRedirect() {
+    print("debug: feature-common BaseRequestViewModel: onCancelRedirect")
     isRedirectModalShowing = !isRedirectModalShowing
   }
 
