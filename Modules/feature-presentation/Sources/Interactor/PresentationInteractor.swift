@@ -56,9 +56,10 @@ final class PresentationInteractorImpl: PresentationInteractor {
 
   public func onDeviceEngagement() async -> Result<OnlineAuthenticationRequestSuccessModel, Error> {
     await presentationCoordinator.initialize()
-		// ToDo: Note: This is called from PresentationRequestViewModel doWork function. Implement redirect function here.
-    let url = walletKitController.getStoredPresentationUrlLink()
-    await walletKitController.resolveRequestDocType(urlString: url)  // ToDo: Obtain target doctype string and redirect to issuer
+		// ToDo: This is called from PresentationRequestViewModel doWork function. Implement redirect function here.
+    let url = walletKitController.getStoredPresentationDeepLink() ?? URLComponents()
+    let requestedDocType = await walletKitController.resolveRequestDocType(deepLink: url)
+		print("Document type \(requestedDocType ?? "Unknown") is requested")
     return await onRequestReceived()
   }
 

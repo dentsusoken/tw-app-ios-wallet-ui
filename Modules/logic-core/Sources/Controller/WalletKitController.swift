@@ -37,7 +37,7 @@ public protocol WalletKitController {
   func stopPresentation()
   func storePresentationDeepLink(deepLink: URLComponents)
   func getStoredPresentationDeepLink() -> URLComponents?
-  func resolveRequestDocType(deepLink: URLComponents) async
+  func resolveRequestDocType(deepLink: URLComponents) async -> String?
   func fetchDocuments() -> [MdocDecodable]
   func fetchDocuments(with type: DocumentTypeIdentifier) -> [MdocDecodable]
   func fetchDocuments(excluded: [DocumentTypeIdentifier]) -> [MdocDecodable]
@@ -149,11 +149,11 @@ final class WalletKitControllerImpl: WalletKitController {
     return deepLink
   }
 
-  public func resolveRequestDocType(deepLink: URLComponents) async {
+	public func resolveRequestDocType(deepLink: URLComponents) async -> String? {
     print("WalletKitController: resolveRequestDocType: deepLink.url?.absoluteString:", deepLink.url?.absoluteString ?? "")
     let urlString = decodeDeeplink(link: deepLink) ?? ""
     let data = urlString.data(using: .utf8) ?? Data()
-    await wallet.resolveRequestDocType(flow: .openid4vp(qrCode: data))
+    return await wallet.resolveRequestDocType(flow: .openid4vp(qrCode: data))
   }
 
   public func startProximityPresentation() -> PresentationSessionCoordinator {
