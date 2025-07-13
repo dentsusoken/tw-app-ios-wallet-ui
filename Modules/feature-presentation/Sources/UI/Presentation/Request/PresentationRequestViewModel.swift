@@ -106,10 +106,10 @@ final class PresentationRequestViewModel<Router: RouterHost>: BaseRequestViewMod
   }
   
   override func onRedirect() async {
-    print("debug: feature-presentation PresentationRequestViewModel: orverride onRedirect")
+    print("debug: feature-presentation PresentationRequestViewModel: override onRedirect")
     switch await interactor.issueDocument() {
     case .success(let docId):
-      print("debug: feature-presentation PresentationRequestViewModel: orverride onRedirect: interactor.issueDocument: success")
+      print("debug: feature-presentation PresentationRequestViewModel: override onRedirect: interactor.issueDocument: success")
       print(docId)
       //        router.push(
       //          with: .issuanceSuccess(
@@ -119,7 +119,7 @@ final class PresentationRequestViewModel<Router: RouterHost>: BaseRequestViewMod
       //        )
       print("success")
     case .failure(let error):
-      print("debug: feature-presentation PresentationRequestViewModel: orverride onRedirect: interactor.issueDocument: failure")
+      print("debug: feature-presentation PresentationRequestViewModel: override onRedirect: interactor.issueDocument: failure")
       print(error)
       //        setNewState(
       //          addDocumentCellModels: transformCellLoadingState(with: false),
