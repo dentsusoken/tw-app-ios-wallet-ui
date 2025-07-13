@@ -33,8 +33,7 @@ public protocol PresentationInteractor {
   func onResponsePrepare(requestItems: [RequestDataUIModel]) async -> Result<RequestItemConvertible, Error>
   func onSendResponse() async -> Result<URL?, Error>
   func updatePresentationCoordinator(with coordinator: PresentationSessionCoordinator)
-  
-  func issueDocument(docType: String) async -> IssueDocumentPartialState
+  func issueDocument() async -> IssueDocumentPartialState
 }
 
 final class PresentationInteractorImpl: PresentationInteractor {
@@ -57,10 +56,11 @@ final class PresentationInteractorImpl: PresentationInteractor {
   public func onDeviceEngagement() async -> Result<OnlineAuthenticationRequestSuccessModel, Error> {
     print("debug: feature-presentation PresentationInteractor: onDeviceEngagement")
     await presentationCoordinator.initialize()
-		// ToDo: This is called from PresentationRequestViewModel doWork function. Implement redirect function here.
-    let url = walletKitController.getStoredPresentationDeepLink() ?? URLComponents()
-    let requestedDocType = await walletKitController.resolveRequestDocType(deepLink: url)
-		print("Document type \(requestedDocType ?? "Unknown") is requested")
+     // ToDo: This is called from PresentationRequestViewModel doWork function. Implement redirect function here.
+     print("debug: feature-presentation PresentationInteractor: onDeviceEngagement: resolve request docType")
+     let url = walletKitController.getStoredPresentationDeepLink() ?? URLComponents()
+     let requestedDocType = await walletKitController.resolveRequestDocType(deepLink: url)
+     print("debug: feature-presentation PresentationInteractor: onDeviceEngagement: Document type \(requestedDocType ?? "Unknown") is requested")
     return await onRequestReceived()
   }
 
@@ -72,7 +72,7 @@ final class PresentationInteractorImpl: PresentationInteractor {
       // let revokedDocuments = (try? await walletKitController.fetchRevokedDocuments()) ?? []
       // let documents = response.items.filter { item in !revokedDocuments.contains(where: { $0 == item.docId }) }
       // guard !documents.isEmpty else { return .failure(WalletCoreError.unableFetchDocuments) } 
-      print("debug: feature-presentation PresentationInteractor: onRequestReceived: return sccess")
+      print("debug: feature-presentation PresentationInteractor: onRequestReceived: return success")
       return .success(
         .init(
           requestDataCells: RequestDataUiModel.items(
@@ -85,7 +85,7 @@ final class PresentationInteractorImpl: PresentationInteractor {
         )
       )
     } catch {
-      print("debug: feature-presentation PresentationInteractor: onRequestReceived: return faulure")
+      print("debug: feature-presentation PresentationInteractor: onRequestReceived: return failure")
       return .failure(error)
     }
   }
@@ -139,9 +139,12 @@ final class PresentationInteractorImpl: PresentationInteractor {
     }
   }
   
-  public func issueDocument(docType: String) async -> IssueDocumentPartialState {
+  public func issueDocument() async -> IssueDocumentPartialState {
     do {
-      let doc = try await walletKitController.issueDocument(docType: docType, format: .cbor)
+      let url = walletKitController.getStoredPresentationDeepLink() ?? URLComponents()
+      let docType = await walletKitController.resolveRequestDocType(deepLink: url) ?? ""
+      let docTypeIdentifier = DocumentTypeIdentifier.getIdentifier(from: docType).rawValue
+      let doc = try await walletKitController.issueDocument(docType: docTypeIdentifier, format: .cbor)
       return .success(doc.id)
     } catch {
       return .failure(WalletCoreError.unableToIssueAndStore)

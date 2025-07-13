@@ -107,8 +107,7 @@ final class PresentationRequestViewModel<Router: RouterHost>: BaseRequestViewMod
   
   override func onRedirect() async {
     print("debug: feature-presentation PresentationRequestViewModel: orverride onRedirect")
-    // ToDo: call issueDocument(docType: String) here temporarily
-    switch await interactor.issueDocument(docType: DocumentTypeIdentifier.MDL.rawValue) {
+    switch await interactor.issueDocument() {
     case .success(let docId):
       print("debug: feature-presentation PresentationRequestViewModel: orverride onRedirect: interactor.issueDocument: success")
       print(docId)

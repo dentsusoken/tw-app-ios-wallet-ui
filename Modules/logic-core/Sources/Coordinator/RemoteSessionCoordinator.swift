@@ -41,6 +41,7 @@ final class RemoteSessionCoordinator: PresentationSessionCoordinator {
   public func requestReceived() async throws -> PresentationRequest {
     print("debug: logic-core RemoteSessionCoordinator: requestReceived")
     guard session.disclosedDocuments.isEmpty == false else {
+      print("debug: logic-core RemoteSessionCoordinator: requestReceived: error: session.disclosedDocuments.isEmpty")
       throw session.uiError ?? .init(description: "Failed to Find knonw documents to send")
     }
 

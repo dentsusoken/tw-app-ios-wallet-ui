@@ -22,7 +22,7 @@ protocol UrlSchemaController {
 
 final class UrlSchemaControllerImpl: UrlSchemaController {
   func retrieveSchemas(with type: String) -> [String] {
-    print("debug: logic-ui UrlSchemaControllerImpl: retrieveSchemas")
+    print("debug: logic-ui UrlSchemaController: retrieveSchemas")
     guard
       let types = Bundle.main.infoDictionary?["CFBundleURLTypes"] as? [[String: Any]],
       let urlSchemas = types.first?["CFBundleURLSchemes"] as? [String]
