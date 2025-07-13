@@ -1308,7 +1308,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VC Not Found"
+            "value" : "Redirect to issuer?"
           }
         }
       }
@@ -1374,7 +1374,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The requested document is not available in your EUDI Wallet. Please contact the authorised issuer for further information."
+            "value" : "The requested document is not available in your Wallet. Please contact the authorised issuer for further information."
           }
         }
       }
