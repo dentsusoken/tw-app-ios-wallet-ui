@@ -79,9 +79,20 @@ public enum DocumentTypeIdentifier: RawRepresentable, Equatable {
   }
 }
 
-private extension DocumentTypeIdentifier {
+extension DocumentTypeIdentifier {
 //  static let pidDocType = "eu.europa.ec.eudi.pid.1"
   static let mdlDocType = "org.iso.18013.5.1.mDL"
   static let unifiedIdDocType = "com.dentsusoken.vecrea.UnifiedID"
 //  static let ageDocType = "eu.europa.ec.eudi.pseudonym.age_over_18.1"
+
+  public static func getIdentifier(from docType: String) -> DocumentTypeIdentifier {
+    switch docType {
+    case DocumentTypeIdentifier.mdlDocType:
+      return .MDL
+    case DocumentTypeIdentifier.unifiedIdDocType:
+      return .UnifiedID
+    default:
+      return .MDL
+    }
+  }
 }
