@@ -45,6 +45,7 @@ final class PresentationInteractorImpl: PresentationInteractor {
     with presentationCoordinator: PresentationSessionCoordinator,
     and walletKitController: WalletKitController
   ) {
+    print("debug: feature-presentation PresentationInteractor: init")
     self.presentationCoordinator = presentationCoordinator
     self.walletKitController = walletKitController
   }
@@ -57,10 +58,11 @@ final class PresentationInteractorImpl: PresentationInteractor {
     print("debug: feature-presentation PresentationInteractor: onDeviceEngagement")
     await presentationCoordinator.initialize()
      // ToDo: This is called from PresentationRequestViewModel doWork function. Implement redirect function here.
-     print("debug: feature-presentation PresentationInteractor: onDeviceEngagement: resolve request docType")
-     let url = walletKitController.getStoredPresentationDeepLink() ?? URLComponents()
-     let requestedDocType = await walletKitController.resolveRequestDocType(deepLink: url)
-     print("debug: feature-presentation PresentationInteractor: onDeviceEngagement: Document type \(requestedDocType ?? "Unknown") is requested")
+//     print("debug: feature-presentation PresentationInteractor: onDeviceEngagement: resolve request docType")
+//     let url = walletKitController.getStoredPresentationDeepLink() ?? URLComponents()
+//     let requestedDocType = await walletKitController.resolveRequestDocType(deepLink: url)
+//     print("debug: feature-presentation PresentationInteractor: onDeviceEngagement: Document type \(requestedDocType ?? "Unknown") is requested")
+    sleep(1)
     return await onRequestReceived()
   }
 
@@ -140,6 +142,7 @@ final class PresentationInteractorImpl: PresentationInteractor {
   }
   
   public func issueDocument() async -> IssueDocumentPartialState {
+    print("debug: feature-presentation PresentationInteractor: issueDocument")
     do {
       let url = walletKitController.getStoredPresentationDeepLink() ?? URLComponents()
       let docType = await walletKitController.resolveRequestDocType(deepLink: url) ?? ""
